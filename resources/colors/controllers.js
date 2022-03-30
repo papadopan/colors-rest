@@ -35,7 +35,7 @@ export const deleteColor = async (req, res)=>{
 export const updateColor = async (req, res)=>{
   const { name , hex } = req.body
   try {
-    const updated = await Color.findOneAndUpdate({name:name, hex:hex})
+    await Color.findOneAndUpdate({name:name, hex:hex})
     res.status(200).json({
       message:"Item Updated"
     })

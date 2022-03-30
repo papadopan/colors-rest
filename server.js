@@ -3,12 +3,16 @@ import bodyParser from 'body-parser'
 import morgan from 'morgan';
 import colorRouter from './resources/colors/router.js'
 import { connect } from './utils/db.js'
+import cors from "cors"
 
 
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(morgan("dev"))
+app.use(cors({
+  origin:"*"
+}))
 
 // register router
 app.use("/color", colorRouter)
