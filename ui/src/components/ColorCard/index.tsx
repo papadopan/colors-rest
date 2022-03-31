@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
-import PropTypes from "prop-types";
-import { Button, Card, Col, Space, Typography } from "antd";
+import React, { useEffect } from "react";
+import { Button, Card, Col, notification, Space, Typography } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+import { useUpdateColorMutation } from "../../store/features/userSlice";
 
 interface Props {
   item: ColorItem;
@@ -14,16 +14,27 @@ interface ColorItem {
 }
 
 const ColorCard: React.FC<Props> = ({ item, onOpen }) => {
-  // const [updateColor, { data, error, loading }] = useMutation(UPDATE_COLOR, {
-  //   refetchQueries: [getAllColors],
-  // });
+  const [updateColor, { isSuccess, isError, reset }] = useUpdateColorMutation();
 
-  const count = useRef(0);
+  useEffect(() => {
+    if (isSuccess) {
+      notification.success({
+        message: " Update Successful",
+      });
+      reset();
+    }
+    if (isError) {
+      notification.error({
+        message: "There was an error updating, please try again",
+      });
+      reset();
+    }
+  }, [isSuccess, isError, reset]);
 
   return (
     <Col xs={22} sm={18} md={12} lg={4}>
       <Card
-        title={item.name + " " + count.current++}
+        title={item.name}
         extra={
           <Button
             icon={<DeleteOutlined />}
@@ -44,15 +55,13 @@ const ColorCard: React.FC<Props> = ({ item, onOpen }) => {
           />
 
           <Typography.Text
-          // editable={{
-          //   onChange: (val) =>
-          //     updateColor({
-          //       variables: {
-          //         name: item.name,
-          //         hex: val,
-          //       },
-          //     }),
-          // }}
+            editable={{
+              onChange: (val) =>
+                updateColor({
+                  name: item.name,
+                  hex: val,
+                }),
+            }}
           >
             {item.hex}
           </Typography.Text>

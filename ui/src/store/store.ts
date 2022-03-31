@@ -5,6 +5,8 @@ export const store = configureStore({
   reducer: {
     [colorSlice.reducerPath]: colorSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(colorSlice.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

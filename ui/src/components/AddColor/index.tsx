@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { Button, Form, Input, Modal, notification, Row } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useAddNewColorMutation } from "../../store/features/userSlice";
@@ -13,8 +12,7 @@ const AddColor: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
 
-  const [addColor, { isLoading, error, reset, isSuccess }] =
-    useAddNewColorMutation();
+  const [addColor, { error, reset, isSuccess }] = useAddNewColorMutation();
 
   useEffect(() => {
     if (isSuccess) {
@@ -25,6 +23,16 @@ const AddColor: React.FC = () => {
       form.resetFields();
       setVisible(false);
       reset();
+    }
+
+    if (error) {
+      if ("data" in error) {
+        notification.error({
+          message: "Error while adding color",
+          description: error.data.message,
+        });
+        reset();
+      }
     }
   }, [isSuccess, error, form, reset]);
 
@@ -83,7 +91,5 @@ const AddColor: React.FC = () => {
     </Row>
   );
 };
-
-AddColor.propTypes = {};
 
 export default AddColor;

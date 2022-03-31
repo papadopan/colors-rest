@@ -19,7 +19,6 @@ export const createColor = async (req, res) => {
     res.status(201).json({ color: newColor });
   } catch (e) {
     res.status(400).json({ message: e.message });
-    throw new Error(e.message);
   }
 };
 
@@ -38,8 +37,9 @@ export const deleteColor = async (req, res) => {
 
 export const updateColor = async (req, res) => {
   const { name, hex } = req.body;
+
   try {
-    await Color.findOneAndUpdate({ name: name, hex: hex });
+    await Color.findOneAndUpdate({ name: name }, { hex: hex });
     res.status(200).json({
       message: "Item Updated",
     });

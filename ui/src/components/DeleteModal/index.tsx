@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import { Modal, Space, Typography, notification } from "antd";
 import { useDeleteColorMutation } from "../../store/features/userSlice";
 interface Props {
@@ -55,7 +54,5 @@ const DeleteModal: React.FC<Props> = ({ visible, itemToDelete, onClose }) => {
     </Modal>
   );
 };
-
-DeleteModal.propTypes = {};
 
 export default DeleteModal;

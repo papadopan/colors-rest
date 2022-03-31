@@ -31,6 +31,7 @@ const ColorList = () => {
   const { data, isLoading, error } = useFetchColorsQuery();
 
   if (isLoading) return <Spin />;
+
   if (error) return <div>There is an error</div>;
 
   return (
