@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { colorSlice } from "./features/user/userSlice";
+import { colorSlice } from "./features/userSlice";
 
 export const store = configureStore({
   reducer: {
     [colorSlice.reducerPath]: colorSlice.reducer,
-    // middleware: (getDefaultMiddleware) =>
-    //   getDefaultMiddleware().concat(colorSlice.middleware),
   },
 });
 

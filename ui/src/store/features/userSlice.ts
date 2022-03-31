@@ -17,8 +17,15 @@ export const colorSlice = createApi({
           return "/color";
         },
       }),
+      addNewColor: builder.mutation<ColorBase, ColorBase>({
+        query: (...colors) => ({
+          url: "/color",
+          method: "POST",
+          body: colors,
+        }),
+      }),
     };
   },
 });
 
-export const { useFetchColorsQuery } = colorSlice;
+export const { useFetchColorsQuery, useAddNewColorMutation } = colorSlice;
