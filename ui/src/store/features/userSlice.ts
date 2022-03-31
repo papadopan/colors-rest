@@ -12,20 +12,37 @@ export const colorSlice = createApi({
   }),
   endpoints(builder) {
     return {
-      fetchColors: builder.query<ColorBase[], void>({
+      fetchColors: builder.query<
+        { message: string; colors: ColorBase[] },
+        void
+      >({
         query() {
           return "/color";
         },
       }),
       addNewColor: builder.mutation<ColorBase, ColorBase>({
-        query: (...colors) => ({
+        query: (colorInput) => ({
           url: "/color",
           method: "POST",
-          body: colors,
+          body: colorInput,
+        }),
+      }),
+      deleteColor: builder.mutation<
+        { message: string; colors: ColorBase },
+        { name: string }
+      >({
+        query: (colorInput) => ({
+          url: "/color",
+          method: "DELETE",
+          body: colorInput,
         }),
       }),
     };
   },
 });
 
-export const { useFetchColorsQuery, useAddNewColorMutation } = colorSlice;
+export const {
+  useFetchColorsQuery,
+  useAddNewColorMutation,
+  useDeleteColorMutation,
+} = colorSlice;
